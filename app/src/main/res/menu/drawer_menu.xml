@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group >
+        <item
+            android:icon="@drawable/ic_home_48pt_3x"
+            android:id="@+id/nav_home"
+            android:checked="true"
+            android:checkable="true"
+            android:title="Home"/>
+        <item
+            android:icon="@drawable/ic_description_black_48dp"
+            android:id="@+id/nav_problems"
+            android:checkable="true"
+            android:title="Problems"/>
+        <item
+            android:icon="@drawable/ic_poll_black_48dp"
+            android:id="@+id/nav_status"
+            android:checkable="true"
+            android:title="Status"/>
+        <item
+            android:icon="@drawable/ic_chrome_reader_mode_black_48dp"
+            android:id="@+id/nav_contest"
+            android:checkable="true"
+            android:title="Contest"/>
+        <item
+            android:icon="@drawable/ic_equalizer_black_48dp"
+            android:id="@+id/nav_ranklist"
+            android:checkable="true"
+            android:title="Ranklist"/>
+    </group>
+
+    <item android:title="Othen">
+        <menu>
+            <item
+                android:title="About"
+                android:checkable="true"
+                android:id="@+id/nav_about"
+                android:icon="@drawable/info_outline_black_144x144"/>
+            <item
+                android:checkable="true"
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/exit_to_app_black_144x144"
+                android:title="Exit"/>
+        </menu>
+    </item>
+
+</menu>

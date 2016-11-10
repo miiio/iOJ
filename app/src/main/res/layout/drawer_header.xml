@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="215dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary_dark"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:fitsSystemWindows="true"
+    android:theme="@style/AppTheme">
+
+    <TextView
+        android:id="@+id/id_mix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:text="talk is cheap, show me the code."/>
+
+
+    <TextView
+        android:id="@+id/id_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/id_mix"
+        android:layout_alignLeft="@id/id_mix"
+        android:layout_marginBottom="5dp"
+        android:text="5120160446"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/id_usericon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_above="@id/id_username"
+        android:layout_alignLeft="@id/id_mix"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/t"
+        app:civ_border_color="@color/icons"
+        app:civ_border_width="1dp" />
+
+
+
+</RelativeLayout>
