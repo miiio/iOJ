@@ -1,6 +1,11 @@
 package com.ioj.wax.ioj;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.InterpolatorRes;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
@@ -8,6 +13,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,16 +22,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout dl;
 
+    private final static int Login_REQUEST_CODE=1;
     private HomeFragment mHomeFragment;
     private RanklistFragment mRanklistFragment;
     private StatusFragment mStatusFragment;
     private ProblemsFragment mProblemsFragment;
     private ContestFragment mContestFragment;
     private NavigationView mNavigationView;
+    private ImageView btn_login;
+    private TextView login_user;
+    private Bitmap pic_bitmap;
+    private String pic_url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +65,46 @@ public class MainActivity extends AppCompatActivity {
         //设置抽屉选择事件
 
         View view = mNavigationView.getHeaderView(0);
-        ImageView btn_login = (ImageView)view.findViewById(R.id.id_usericon);
+        btn_login = (ImageView)view.findViewById(R.id.id_usericon);
+        login_user = (TextView)view.findViewById(R.id.id_username);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivityForResult(intent,Login_REQUEST_CODE);//
             }
         });
 
+    }
+    //负责更新UI
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg.what==85)
+                btn_login.setImageBitmap(pic_bitmap);
+            super.handleMessage(msg);
+        }
+    };
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==Login_REQUEST_CODE)
+        {
+            String user = data.getExtras().getString("user");
+            pic_url = data.getExtras().getString("pic_url");
+            login_user.setText(user);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    pic_bitmap =initRankData.getHttpBitmap(pic_url);
+                    mHandler.obtainMessage(85).sendToTarget();
+                }
+            }).start();
+
+
+        }
     }
 
     private void setDefaultFragment() {

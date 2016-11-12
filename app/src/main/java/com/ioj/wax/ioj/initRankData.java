@@ -27,7 +27,6 @@ public class initRankData {
         URL url = new URL(path.trim());
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         int id = conn.getResponseCode();
-        int b=3;
         if (id == 200) {// 判断请求码是否200，否则为失败
             InputStream is = conn.getInputStream(); // 获取输入流
             byte[] data = readStream(is); // 把输入流转换成字符串组
@@ -58,7 +57,7 @@ public class initRankData {
         inputStream.close();
         return bout.toByteArray();
     }
-    private static Bitmap getHttpBitmap(String url){
+    public static Bitmap getHttpBitmap(String url){
         URL myFileURL;
         Bitmap bitmap=null;
         try{
