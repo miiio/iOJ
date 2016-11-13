@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -38,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private ContestFragment mContestFragment;
     private NavigationView mNavigationView;
     private ImageView btn_login;
-    private TextView login_user;
+    private TextView TextView__username;
+    private TextView TextView_maxin;
     private Bitmap pic_bitmap;
-    private String pic_url;
+    public UserInfo mUserInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         View view = mNavigationView.getHeaderView(0);
         btn_login = (ImageView)view.findViewById(R.id.id_usericon);
-        login_user = (TextView)view.findViewById(R.id.id_username);
+        TextView__username = (TextView)view.findViewById(R.id.id_username);
+        TextView_maxin = (TextView)view.findViewById(R.id.id_mix);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,23 +90,21 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==Login_REQUEST_CODE)
-        {
-            String user = data.getExtras().getString("user");
-            pic_url = data.getExtras().getString("pic_url");
-            login_user.setText(user);
+        if (resultCode == Login_REQUEST_CODE) {
+            mUserInfo = new UserInfo();
+            mUserInfo =(UserInfo) data.getExtras().getSerializable("info");
+            TextView__username.setText(mUserInfo.getUsername());
+            TextView_maxin.setText(mUserInfo.getMaxin());
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    pic_bitmap =initRankData.getHttpBitmap(pic_url);
+                    pic_bitmap = initRankData.getHttpBitmap(mUserInfo.getPicurl());
                     mHandler.obtainMessage(85).sendToTarget();
                 }
             }).start();
-
 
         }
     }

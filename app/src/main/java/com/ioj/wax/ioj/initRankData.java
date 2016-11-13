@@ -38,8 +38,10 @@ public class initRankData {
             {
 
                 JSONObject jsonobj2 = jsonArr.getJSONObject(i);
+                //if(maxim.isEmpty()) {this.maxim="我不想说话.";}
                 String picUrl = "http://acm.swust.edu.cn" + jsonobj2.getString("avatar");
-                RankData.add(new Ranklist_p(jsonobj2.getString("username"),getHttpBitmap(picUrl),jsonobj2.getString("maxim"),
+                RankData.add(new Ranklist_p(jsonobj2.getString("username"),getHttpBitmap(picUrl),
+                        jsonobj2.getString("maxim").isEmpty()?"我不想说话.":jsonobj2.getString("maxim"),
                         jsonobj2.getString("solved"),jsonobj2.getString("submit"),jsonobj2.getString("rank_num")));
             }
             //map=(LinkedHashMap<String,String>)jsonObject.get("ranks");

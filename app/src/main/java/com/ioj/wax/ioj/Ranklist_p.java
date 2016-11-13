@@ -14,6 +14,6 @@ public class Ranklist_p{
         this.solved = solved;
         this.submit = submit;
         this.rank ="No."+ rank;
-        if(maxim.isEmpty()) {this.maxim="我不想说话.";}
+        //if(maxim.isEmpty()) {this.maxim="我不想说话.";}
     }
 }

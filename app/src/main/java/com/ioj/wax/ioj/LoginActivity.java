@@ -2,8 +2,6 @@ package com.ioj.wax.ioj;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,9 +22,9 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends Activity {
     private final static int Login_REQUEST_CODE=1;
-    private Bitmap pic;
     private EditText input_user;
     private  EditText input_password;
+    UserInfo info;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,20 +38,18 @@ public class LoginActivity extends Activity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String picUrl=null;
                         String ret = null;
                         ret = Login(input_user.getText().toString(),input_password.getText().toString());
                         try {
                             //pic = getHttpBitmap(getPic(ret));
-                            picUrl = getPic(ret);
+                            info = GetUserInfo(ret);
+                            info.setUsername( input_user.getText().toString());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Intent intent2=new Intent();
-                        intent2.putExtra("pic_url", picUrl);
-                        intent2.putExtra("user",input_user.getText().toString());
-                        //startActivityForResult(intent2,Login_REQUEST_CODE);
-                        setResult(Login_REQUEST_CODE, intent2);
+                        Intent ResultIntent=new Intent();
+                        ResultIntent.putExtra("info",info);
+                        setResult(Login_REQUEST_CODE, ResultIntent);
                         finish();
                     }
                 }).start();
@@ -63,36 +59,11 @@ public class LoginActivity extends Activity {
         });
     }
 
-    private static Bitmap getHttpBitmap(String url){
-        URL myFileURL;
-        Bitmap bitmap=null;
-        try{
-            myFileURL = new URL(url);
-            //获得连接
-            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
-            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
-            conn.setConnectTimeout(6000);
-            //连接设置获得数据流
-            conn.setDoInput(true);
-            //不使用缓存
-            conn.setUseCaches(true);
-            //这句可有可无，没有影响
-            //conn.connect();
-            //得到数据流
-            InputStream is = conn.getInputStream();
-            //解析得到图片
-            bitmap = BitmapFactory.decodeStream(is);
-            //关闭数据流
-            is.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
-
-    private String getPic(String cookie) throws IOException {
-        String ret=null;
-        URL picurl=new URL("http://acm.swust.edu.cn/user/userinfo/");
+    private UserInfo GetUserInfo(String cookie) throws IOException {
+        UserInfo ret=new UserInfo();
+        ret.setCookie(cookie);
+        //URL picurl=new URL("http://acm.swust.edu.cn/user/userinfo/");
+        URL picurl = new URL("http://acm.swust.edu.cn/mobile/index/");
         HttpURLConnection picConn = (HttpURLConnection)picurl.openConnection();
         picConn.setRequestProperty("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
         picConn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36");
@@ -101,7 +72,7 @@ public class LoginActivity extends Activity {
                 "Hm_lvt_f5127c6793d40d199f68042b8a63e725=1478845119; " +
                 "Hm_lpvt_f5127c6793d40d199f68042b8a63e725=1478846104; " +
                 cookie);
-        picConn.setRequestMethod("GET");//gjl895706594
+        picConn.setRequestMethod("GET");
         String html=null;
         int id = picConn.getResponseCode();
         if (id == 200) {
@@ -123,20 +94,27 @@ public class LoginActivity extends Activity {
             baos.close();
             // 返回字符串
             html = new String(baos.toByteArray());
-            String reg = "/media/avatar/.*..*\"";
-            Pattern pattern = Pattern.compile(reg);
-            // 忽略大小写的写法
-            Matcher matcher = pattern.matcher(html);
-            // 字符串是否与正则表达式相匹配
-            while(matcher.find())
-                ret ="http://acm.swust.edu.cn"+ matcher.group();
+            //获取头像url
+            String regPic = "(/media/avatar/.*..*)\" ";
+            Pattern patternPic = Pattern.compile(regPic);
+            Matcher matcherPic = patternPic.matcher(html);
+            while (matcherPic.find())
+                ret.setPicurl("http://acm.swust.edu.cn" + matcherPic.group(1));
+            String regMaxin = "lor:green\">(.*)</div>";
+            //获取maxin
+            Pattern patternMaxin = Pattern.compile(regMaxin);
+            Matcher matcherMaxin = patternMaxin.matcher(html);
+            while (matcherMaxin.find())
+                ret.setMaxin(matcherMaxin.group(1));
+            if (ret.getMaxin().isEmpty()) {
+                ret.setMaxin("我不想说话.");
 
-        } else {
-            System.out.println("链接失败.........");
+            } else {
+                System.out.println("链接失败.........");
+            }
         }
         //System.out.println(html);
-        ret = ret.substring(0,ret.length()-1);
-        System.out.println(ret);
+        //ret.picurl = ret.picurl.substring(0,ret.picurl.length()-1);
         return ret;
     }
 
