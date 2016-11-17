@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mUserInfo = new UserInfo();
         dl=(DrawerLayout)findViewById(R.id.id_drawer_layout);
         ImageView iv_menu = (ImageView) findViewById(R.id.Image_menu);
         iv_menu.setOnClickListener(new View.OnClickListener() {

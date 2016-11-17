@@ -108,7 +108,7 @@ public class Ranklist_all extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(!isRerfer)
+                if(!isRerfer &&!isLoadmore)
                     new RefreshThread().start();
             }
         });

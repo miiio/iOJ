@@ -10,6 +10,7 @@ public class UserInfo implements Serializable{
     private String maxin;
     private boolean isLogin;
     public String getCookie() {
+        if(cookie==null)return "";
         return cookie;
     }
     public void setCookie(String cookie) {

@@ -43,6 +43,7 @@ public class LoginActivity extends Activity {
                         try {
                             //pic = getHttpBitmap(getPic(ret));
                             info = GetUserInfo(ret);
+                            info.setLogin(true);
                             info.setUsername( input_user.getText().toString());
                         } catch (IOException e) {
                             e.printStackTrace();

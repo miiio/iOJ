@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="5dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/all_layout_swipe_refresh"
+        android:id="@+id/all_layout_swipe_refresh_pb"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/Rb_recyclerview"
+            android:id="@+id/Pb_recyclerview"
+            android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </android.support.v4.widget.SwipeRefreshLayout>

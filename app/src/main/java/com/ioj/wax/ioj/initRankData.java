@@ -48,7 +48,7 @@ public class initRankData {
         }
     }
 
-    private static byte[] readStream(InputStream inputStream) throws Exception {
+    public static byte[] readStream(InputStream inputStream) throws Exception {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
         int len = 0;
@@ -85,5 +85,6 @@ public class initRankData {
         }
         return bitmap;
     }
+
 
 }
