@@ -1,5 +1,6 @@
 package com.ioj.wax.ioj;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +30,7 @@ public class ProblemsFragment extends Fragment {
     private boolean isLoadmore = false;
     private static final int MSG_SUCCESS = 0;
     private static final int MSG_FAILURE = 1;
+    private final static int PROBLEMS_REQUEST_CODE=1;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
@@ -45,6 +47,15 @@ public class ProblemsFragment extends Fragment {
         mProblemsAdapter = new ProblemsAdapter(getActivity(), mProblemsData);
         // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(mProblemsAdapter);
+        //为mRecyclerView设置点击事件
+        mProblemsAdapter.setRecyitemonclick(new ProblemsAdapter.RecyItemOnclick() {
+            @Override
+            public void onItemOnclick(View view, int index, String id,String title) {
+                Intent intent = new Intent(getActivity(),ProblemsView.class);
+                intent.putExtra("title",title);
+                startActivity(intent);
+            }
+        });
         mSwipeRefreshLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

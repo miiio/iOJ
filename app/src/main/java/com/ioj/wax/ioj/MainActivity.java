@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.InterpolatorRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
@@ -15,12 +16,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -31,7 +34,7 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout dl;
-
+    private long exitTime = 0;
     private final static int Login_REQUEST_CODE=1;
     private HomeFragment mHomeFragment;
     private RanklistFragment mRanklistFragment;
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-                startActivityForResult(intent,Login_REQUEST_CODE);//
+                startActivityForResult(intent,Login_REQUEST_CODE);
             }
         });
 
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView image=(ImageView) findViewById(R.id.shadow_view);
         ViewGroup.LayoutParams para;
         para = image.getLayoutParams();
-        para.height=15;
+        para.height=12;
         image.setLayoutParams(para);
     }
     private NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener =new NavigationView.OnNavigationItemSelectedListener() {
@@ -191,6 +194,10 @@ public class MainActivity extends AppCompatActivity {
                     setshadow();
                     transaction.replace(R.id.id_content, mHomeFragment);
                     break;
+                case R.id.nav_exit:
+                    iojexit();
+                    return false;
+
             }
             transaction.commit();
             //事务提交
@@ -199,4 +206,25 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+    public void iojexit(){
+        finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                //Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                Snackbar sBar = Snackbar.make(dl,"再按一次退出程序",Snackbar.LENGTH_SHORT);
+                View sbView = sBar.getView();
+                sBar.show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

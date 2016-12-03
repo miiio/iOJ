@@ -20,7 +20,7 @@
             android:id="@+id/Frame_shadow2">
             <!-- **** Place Your Content Here **** -->
             <ImageView android:layout_width="match_parent"
-                android:layout_height="6dp"
+                android:layout_height="4dp"
                 android:id="@+id/shadow_view2"
                 android:background="@drawable/toolbar_shadow"/>
         </FrameLayout>

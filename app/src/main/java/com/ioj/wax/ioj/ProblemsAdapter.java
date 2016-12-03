@@ -23,6 +23,7 @@ public class ProblemsAdapter extends RecyclerView.Adapter<ViewHolder>{
     public boolean isRefer = false;
     public static final int TYPE_FOOTER = 11;
     public static final int TYPE_ITEM = 0;
+    RecyItemOnclick recyitemonclick;
     public ProblemsAdapter( Context context , List<Problems_p> problems)
     {
         this.mContext = context;
@@ -34,7 +35,7 @@ public class ProblemsAdapter extends RecyclerView.Adapter<ViewHolder>{
         View v;
         if(viewType==TYPE_ITEM){
             v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.problems_show_cardview, viewGroup, false);
-            return new itemViewHolder(v);
+            return new itemViewHolder(v,recyitemonclick);
         }
         else if(viewType==TYPE_FOOTER ) {
             v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.refresh_loading, viewGroup, false);
@@ -69,6 +70,7 @@ public class ProblemsAdapter extends RecyclerView.Adapter<ViewHolder>{
         return TYPE_ITEM;
     }
 
+
     public static class FootViewHolder extends ViewHolder {
 
         public FootViewHolder(View view) {
@@ -76,20 +78,44 @@ public class ProblemsAdapter extends RecyclerView.Adapter<ViewHolder>{
         }
     }
 
-    public static class itemViewHolder
-            extends ViewHolder
+
+    // 设置点击事件
+    public void setRecyitemonclick(RecyItemOnclick recyitemonclick) {
+        this.recyitemonclick = recyitemonclick;
+    }
+
+    public interface RecyItemOnclick {
+        //item点击
+        public void onItemOnclick(View view, int index,String id,String title);
+    }
+
+    public class itemViewHolder
+            extends ViewHolder implements View.OnClickListener
     {
         public TextView mTextView_problemsid;
         public TextView mTextView_problemstitle;
         public ProgressBar mProgressBar_diffcult;
         public ImageView mImageViewIsAc;
-        public itemViewHolder( View v )
+        RecyItemOnclick recyitemonclick;
+        public itemViewHolder( View v,RecyItemOnclick recyitemonclick )
         {
             super(v);
             mTextView_problemsid = (TextView) v.findViewById(R.id.textview_problemsID);
             mTextView_problemstitle = (TextView) v.findViewById(R.id.textview_problestitle);
             mProgressBar_diffcult = (ProgressBar) v.findViewById(R.id.Pb_Progressbar_diffcult);
             mImageViewIsAc = (ImageView) v.findViewById(R.id.Pb_Imageview_isac);
+            this.recyitemonclick = recyitemonclick;
+            v.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Problems_p pp = problems.get(getAdapterPosition());
+            if (recyitemonclick != null) {
+                // 重点 这里ViewHolder 中提供了 getPosition（）；
+                int position = getPosition();
+                recyitemonclick.onItemOnclick(v, position,pp.id,pp.title);
+            }
         }
     }
 }

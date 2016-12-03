@@ -35,10 +35,10 @@ public class RanklistAdapter extends RecyclerView.Adapter<ViewHolder>{
         }
         else if(viewType==TYPE_FOOTER ) {
             v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.refresh_loading, viewGroup, false);
-            return new FootViewHolder(v);
+    return new FootViewHolder(v);
+}
+return null;
         }
-        return null;
-    }
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {

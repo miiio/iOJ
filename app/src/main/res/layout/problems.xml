@@ -1,74 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/problemview"
-    android:fitsSystemWindows="true"
-    android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        app:elevation="0dp"
+    <ScrollView
+        android:background="#EAEAEA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/problemsview_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/primary"
-            app:layout_scrollFlags="scroll|enterAlways">
-            <ImageView
-                android:id="@+id/problemsView_Back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/arrow_back_white_108x108"
-                app:layout_scrollFlags="scroll|enterAlways"/>
-            <TextView
-                android:id="@+id/problemsview_title"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="25dp"
-                android:textSize="20sp"
-                android:textColor="@color/icons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:text="Youth Hostel Dorm"
-                app:layout_scrollFlags="scroll|enterAlways"/>
-        </android.support.v7.widget.Toolbar>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="9dp"
-            android:layout_marginRight="9dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="1dp"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="4dp">
-            <TextView
-                android:id="@+id/pbv_limit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Time limit:1000     Memory limit:65535"
-                android:gravity="center_horizontal|center_vertical"
-                android:textColor="#00a5e2"
-                android:textSize="15sp"
-                android:padding="10dp"/>
-        </android.support.v7.widget.CardView>
-
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:id="@+id/pbv_nestscrollview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical">
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="1dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp">
+                <TextView
+                    android:id="@+id/pbv_limit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Time limit:1000     Memory limit:65535"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:textColor="#00a5e2"
+                    android:textSize="15sp"
+                    android:padding="10dp"/>
+            </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_marginTop="8dp"
@@ -225,19 +187,5 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/enter_floating_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        app:layout_anchor="@id/pbv_nestscrollview"
-        app:layout_anchorGravity="bottom|right|end"
-        android:layout_margin="20dp"
-        android:clickable="true"
-        app:fabSize="normal"
-        android:src="@drawable/add_white_108x108" />
-</android.support.design.widget.CoordinatorLayout>
+    </ScrollView>
+</LinearLayout>

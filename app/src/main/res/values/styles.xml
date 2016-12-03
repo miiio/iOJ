@@ -13,4 +13,8 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="Pbv_Theme" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="colorPrimary">@color/icons</item>
+    </style>
 </resources>
