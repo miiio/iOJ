@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivityForResult(intent,Login_REQUEST_CODE);
+                //startActivity(new Intent(MainActivity.this,ProblemsView.class));
             }
         });
 

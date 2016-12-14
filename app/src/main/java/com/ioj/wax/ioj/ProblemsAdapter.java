@@ -52,8 +52,9 @@ public class ProblemsAdapter extends RecyclerView.Adapter<ViewHolder>{
             ((itemViewHolder)viewHolder).mTextView_problemsid.setText(p.id);
             ((itemViewHolder)viewHolder).mTextView_problemstitle.setText(p.title);
             ((itemViewHolder)viewHolder).mProgressBar_diffcult.setProgress(p.diffcult);
-            if(p.isAc=="true")
-                ((itemViewHolder)viewHolder).mImageViewIsAc.setImageResource(R.drawable.done_black_144x144);
+            if(p.isAc=="true") {
+                ((itemViewHolder) viewHolder).mImageViewIsAc.setImageResource(R.drawable.done_black_144x144);
+            }
             else
                 ((itemViewHolder)viewHolder).mImageViewIsAc.setImageBitmap(null);
         }
