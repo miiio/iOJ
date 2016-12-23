@@ -1,6 +1,7 @@
 package com.ioj.wax.ioj;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,14 @@ import java.util.List;
 
 public class StatusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private List<StatusInfo> status;
+    private String username;
     private Context mContext;
     public static final int TYPE_FOOTER = 11;
     public static final int TYPE_ITEM = 0;
     RecyItemOnclick recyitemonclick;
-    public StatusAdapter(Context context , List<StatusInfo> status)
+    public StatusAdapter(Context context , List<StatusInfo> status,String username)
     {
+        this.username = username;
         this.mContext = context;
         this.status = status;
     }
@@ -52,6 +55,13 @@ public class StatusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((itemViewHolder)viewHolder).tv_time.setText(p.getTime());
             ((itemViewHolder)viewHolder).tv_lenght.setText(p.getLenght());
             ((itemViewHolder)viewHolder).tv_lenght.setText(p.getLenght());
+            if (p.getUsername().equals(username)){
+                ((itemViewHolder)viewHolder).Img_isyou.setVisibility(View.VISIBLE);
+                ((itemViewHolder)viewHolder).tv_username.setTextColor(Color.parseColor("#468847"));
+            }else{
+                ((itemViewHolder)viewHolder).Img_isyou.setVisibility(View.INVISIBLE);
+                ((itemViewHolder)viewHolder).tv_username.setTextColor(Color.parseColor("#757575"));
+            }
             String str_result="Error";
             switch (p.getResult()){
                 case "-1":
@@ -159,6 +169,7 @@ public class StatusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public TextView tv_lenght;
         public TextView tv_submittime;
         public ImageView Img_result;
+        public ImageView Img_isyou;
         RecyItemOnclick recyitemonclick;
         public itemViewHolder( View v,RecyItemOnclick recyitemonclick )
         {
@@ -171,6 +182,7 @@ public class StatusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tv_lenght = (TextView) v.findViewById(R.id.stauts_lenght);
             tv_submittime = (TextView) v.findViewById(R.id.status_submittime);
             Img_result = (ImageView) v.findViewById(R.id.status_ic_result);
+            Img_isyou = (ImageView) v.findViewById(R.id.status_Img_isyou);
             this.recyitemonclick = recyitemonclick;
             v.setOnClickListener(this);
         }

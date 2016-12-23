@@ -1,21 +1,34 @@
 package com.ioj.wax.ioj;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.evilbinary.highliter.HighlightEditText;
+import org.evilbinary.managers.Configure;
+import org.evilbinary.managers.ConfigureManager;
+import org.json.JSONException;
 import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
@@ -32,6 +45,8 @@ import me.drakeet.materialdialog.MaterialDialog;
 public class ProblemsView extends Activity{
     String pbId;
     String pbTitle;
+    String cookies;
+    String contestId;
     ProblemsInfo mProblemsInfo;
     SwipeRefreshLayout mSwipeRefreshLayout;
     TextView TextView_des;
@@ -39,19 +54,24 @@ public class ProblemsView extends Activity{
     TextView TextView_out;
     TextView TextView_si;
     TextView TextView_so;
-    WebView WebView_code;
-    WebSettings settings;
+    AppBarLayout appbar;
+    private String preCode;
+    private ConfigureManager mConfigureManager;
+    private HighlightEditText mHighlightEdit;
+    private Configure mConf;
+    private LinearLayout linearLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Pbv_Theme);
         setContentView(R.layout.problemsview);
-        TextView tx_title = (TextView)findViewById(R.id.problemsview_title);
+        final TextView tx_title = (TextView)findViewById(R.id.problemsview_title);
         TextView_des = (TextView)findViewById(R.id.pbv_description);
         TextView_in = (TextView)findViewById(R.id.pbv_input);
         TextView_out = (TextView)findViewById(R.id.pbv_output);
         TextView_si = (TextView)findViewById(R.id.pbv_sampleinput);
         TextView_so = (TextView)findViewById(R.id.pbv_sampleoutput);
+        appbar = (AppBarLayout)findViewById(R.id.problemsView_appbar);
         ImageView imagback = (ImageView)findViewById(R.id.problemsView_Back);
         imagback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,35 +83,64 @@ public class ProblemsView extends Activity{
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                LayoutInflater inflater = getLayoutInflater();
-                View   dialog = inflater.inflate(R.layout.problem_submit,(ViewGroup) findViewById(R.id.prb_submit));
-                WebView_code = (WebView) dialog.findViewById(R.id.WebView_submitcode);
-                settings = WebView_code.getSettings();
-                settings.setJavaScriptEnabled(true);
-                settings.setBuiltInZoomControls(false);
-                WebView_code.requestFocus();
-                WebView_code.loadUrl("file:///android_asset/highlight.html");
-                WebView_code.requestFocus();
-                final MaterialDialog mMaterialDialog = new MaterialDialog(ProblemsView.this).setTitle("Submit");
-                mMaterialDialog.setView(dialog);
-                mMaterialDialog.setNegativeButton("Cancel", new View.OnClickListener() {
+                initCodeEditView();
+                preCode = "";
+                mHighlightEdit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMaterialDialog.dismiss();
-                    }
-                });
-                mMaterialDialog.setPositiveButton("Submit", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                        String curCode = mHighlightEdit.getText().toString();
+                        if(!curCode.equals(preCode) && Math.abs(curCode.length()-preCode.length())>10 ){
+                            mHighlightEdit.setSource(curCode);
+                            preCode=curCode;
+                        }
 
                     }
                 });
-                mMaterialDialog.show();
-                WebView_code.requestFocus();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(ProblemsView.this);
+                builder.setTitle("Submit");
+                builder.setView(linearLayout);
+                builder.setNegativeButton("取消", null);
+                builder.setPositiveButton("提交", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                boolean ret=false;
+                                try {
+                                    ret = LoadData.SubmitProblem(pbId,contestId,mHighlightEdit.getText().toString(),"g++",cookies);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                if(ret){
+                                    Snackbar sBar = Snackbar.make(appbar,"提交成功！",Snackbar.LENGTH_SHORT);
+                                    View sv = sBar.getView();
+                                    ((TextView)sv.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#ffffffff"));
+                                    sv.setBackgroundColor(Color.parseColor("#00BCD4"));
+                                    sBar.show();
+                                    Intent ResultIntent=new Intent();
+                                    setResult(2, ResultIntent);
+                                    finish();
+                                }else {
+                                    Snackbar sBar = Snackbar.make(appbar,"未知错误！提交失败！",Snackbar.LENGTH_SHORT);
+                                    View sv = sBar.getView();
+                                    ((TextView)sv.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#ffffffff"));
+                                    sv.setBackgroundColor(Color.parseColor("#00BCD4"));
+                                    sBar.show();
+                                }
+                            }
+                        }).start();
+                    }
+                });
+                builder.show();
             }
         });
+        //获取传入问题信息
         Intent intent = getIntent();
+        cookies = intent.getStringExtra("cookies");
+        contestId = intent.getStringExtra("contestid");
         pbTitle = intent.getStringExtra("title");
         pbId = intent.getStringExtra("id");
         tx_title.setText(pbTitle);
@@ -109,7 +158,18 @@ public class ProblemsView extends Activity{
             }
         }).start();
     }
-
+    private void initCodeEditView(){
+        linearLayout = new LinearLayout(ProblemsView.this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        mConfigureManager = new ConfigureManager(ProblemsView.this);
+        mConfigureManager.exractDefaultConfigure();
+        mConf = mConfigureManager.getDefaultConfigure();
+        mConf.mTheme = "edit-xcode";// solarized-light vampire
+        mConf.mLanguage = "c";
+        mHighlightEdit = new HighlightEditText(ProblemsView.this,mConf);
+        mHighlightEdit.setSource("\n\n\n\n\n\n\n\n\n\n\n\n");
+        linearLayout.addView(mHighlightEdit);
+    }
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

@@ -61,7 +61,9 @@ public class ProblemsFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),ProblemsView.class);
                 intent.putExtra("title",title);
                 intent.putExtra("id",id);
-                startActivity(intent);
+                intent.putExtra("cookies",mUserInfo.getCookie());
+                intent.putExtra("contestid","0");
+                startActivityForResult(intent,1);
             }
         });
         mSwipeRefreshLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -122,7 +124,7 @@ public class ProblemsFragment extends Fragment {
                         if(isInteger(edittext)) {
                             intent.putExtra("title", edittext);
                             intent.putExtra("id", edittext);
-                            startActivity(intent);
+                            startActivityForResult(intent,2);
                         }else{
                             search_title = edittext;
                             new SearchThread().start();
@@ -135,6 +137,15 @@ public class ProblemsFragment extends Fragment {
         });
         return view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==2){
+            ((MainActivity)getActivity()).openStatus();
+        }
+    }
+
     public static boolean isInteger(String value) {
         try {
             Integer.parseInt(value);

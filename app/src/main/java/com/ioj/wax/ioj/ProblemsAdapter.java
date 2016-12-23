@@ -1,6 +1,7 @@
 package com.ioj.wax.ioj;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,11 +50,12 @@ public class ProblemsAdapter extends RecyclerView.Adapter<ViewHolder>{
         if(viewHolder instanceof itemViewHolder) {
             // 给ViewHolder设置元素
             Problems_p p = problems.get(position);
-            ((itemViewHolder)viewHolder).mTextView_problemsid.setText(p.id);
+            int id = Integer.parseInt(p.id);
+            ((itemViewHolder)viewHolder).mTextView_problemsid.setText(id+"");
             ((itemViewHolder)viewHolder).mTextView_problemstitle.setText(p.title);
             ((itemViewHolder)viewHolder).mProgressBar_diffcult.setProgress(p.diffcult);
             if(p.isAc=="true") {
-                ((itemViewHolder) viewHolder).mImageViewIsAc.setImageResource(R.drawable.done_black_144x144);
+                ((itemViewHolder) viewHolder).mImageViewIsAc.setImageResource(R.drawable.isac);
             }
             else
                 ((itemViewHolder)viewHolder).mImageViewIsAc.setImageBitmap(null);

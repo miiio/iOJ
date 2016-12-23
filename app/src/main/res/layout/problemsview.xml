@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/problemsView_appbar"
         app:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -230,7 +230,8 @@
         android:layout_alignParentRight="true"
         app:layout_anchor="@id/pbv_nestscrollview"
         app:layout_anchorGravity="bottom|right|end"
-        android:layout_margin="20dp"
+        app:layout_behavior="com.ioj.wax.ioj.ScrollAwareFABBehaviorDefault"
+        android:layout_margin="25dp"
         android:clickable="true"
         app:fabSize="normal"
         android:src="@drawable/add_white_108x108" />

@@ -5,63 +5,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <RelativeLayout
-            android:id="@+id/tool_bar"
-            android:layout_width="wrap_content"
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/main_appbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main_toolbar"
+                app:theme="@style/toolbar_theme"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/primary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/id_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/primary"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-                <ImageView
-                    android:id="@+id/Image_menu"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_menu_white_3x"
-                    android:layout_marginLeft="13dp"
-                    android:layout_centerVertical="true" />
-                <TextView
-                    android:id="@+id/TextView_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/Image_menu"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="25sp"
-                    android:layout_alignBottom="@id/Image_menu"
-                    android:textColor="@color/icons"
-                    android:text="Home"/>
-        </RelativeLayout>
+        <FrameLayout
+            android:id="@+id/id_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/main_appbar">
 
-        <FrameLayout android:layout_width="fill_parent"
-            android:layout_below="@id/tool_bar"
-            android:layout_height="wrap_content"
-            android:id="@+id/Frame_shadow">
-            <!-- **** Place Your Content Here **** -->
-            <ImageView android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:id="@+id/shadow_view"
-                android:background="@drawable/toolbar_shadow"/>
 
         </FrameLayout>
-    <FrameLayout
-        android:id="@+id/id_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/Frame_shadow">
-
-
-    </FrameLayout>
 
     </RelativeLayout>
 
@@ -72,7 +43,6 @@
         android:layout_gravity="left"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer_menu"
-        />
+        app:menu="@menu/drawer_menu" />
 
 </android.support.v4.widget.DrawerLayout>

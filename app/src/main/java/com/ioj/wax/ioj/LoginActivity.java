@@ -49,6 +49,7 @@ public class LoginActivity extends Activity {
                             e.printStackTrace();
                         }
                         Intent ResultIntent=new Intent();
+                        ObjectSaveUtils.saveObject(LoginActivity.this,"UserInfo",info);
                         ResultIntent.putExtra("info",info);
                         setResult(Login_REQUEST_CODE, ResultIntent);
                         finish();

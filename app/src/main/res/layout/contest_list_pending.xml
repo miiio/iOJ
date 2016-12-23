@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="#cccccc"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="#e8e8e8"
+        android:paddingTop="6dp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="6dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/sjxpend" />
+
+        <TextView
+            android:id="@+id/base_swipe_group_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="1dp"
+            android:gravity="center_vertical"
+            android:textColor="#515151"
+            android:text="Pending"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+
+    <include layout="@layout/contest_list_notitle"></include>
+</LinearLayout>

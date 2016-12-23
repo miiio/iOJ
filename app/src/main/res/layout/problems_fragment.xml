@@ -24,6 +24,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         app:layout_anchor="@id/all_layout_swipe_refresh_pb"
+        app:layout_behavior="com.ioj.wax.ioj.ScrollAwareFABBehaviorDefault"
         app:layout_anchorGravity="bottom|right|end"
         android:layout_margin="40dp"
         android:clickable="true"

@@ -91,7 +91,7 @@ public class LoadProblemsData {
                 //"submit_num": 2846, "ac_num": 1227
                 double diff =(jsonobj2.getInt("ac_num")*1.0) / (jsonobj2.getInt("submit_num")*1.0) *100;
                 ProblemsData.add(new Problems_p(jsonobj2.getString("id"),
-                        jsonobj2.getString("title"),jsonobj2.getString("ac"),100-(int)diff));
+                        jsonobj2.getString("title"),jsonobj2.getString("ac"),100-(int)diff,"0"));
             }
         }
     }
@@ -169,7 +169,7 @@ public class LoadProblemsData {
                 JSONObject jsonobj2 = jsonArr.getJSONObject(i);
                 double diff =(jsonobj2.getInt("ac_num")*1.0) / (jsonobj2.getInt("submit_num")*1.0) *100;
                 ProblemsData.add(new Problems_p(jsonobj2.getString("id"),
-                        jsonobj2.getString("title"),jsonobj2.getString("ac"),100-(int)diff));
+                        jsonobj2.getString("title"),jsonobj2.getString("ac"),100-(int)diff,"0"));
             }
         }
     }

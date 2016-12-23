@@ -12,9 +12,17 @@
         <item name="android:divider">@color/divider</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
-
+    <style name="toolbar_theme" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/icons</item>
+    </style>
+    <style name="menu_theme" parent="AppTheme">
+        <item name="android:textColorSecondary">#000000</item>
+    </style>
     <style name="Pbv_Theme" parent="AppTheme">
         <item name="android:windowTranslucentStatus">false</item>
         <item name="colorPrimary">@color/icons</item>
+    </style>
+    <style name="smalltitle">
+        <item name="android:textSize">0sp</item>
     </style>
 </resources>

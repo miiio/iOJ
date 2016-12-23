@@ -43,7 +43,7 @@ public class StatusFragment extends Fragment {
         // 设置固定大小
         mRecyclerView.setHasFixedSize(true);
         // 初始化自定义的适配器
-        mStatusAdapter = new StatusAdapter(getActivity(), mStatusData);
+        mStatusAdapter = new StatusAdapter(getActivity(), mStatusData,mUserInfo.getUsername());
         // 为mRecyclerView设置适配器
         mRecyclerView.setAdapter(mStatusAdapter);
         //为mRecyclerView设置点击事件

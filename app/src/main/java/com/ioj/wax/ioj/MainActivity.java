@@ -2,34 +2,25 @@ package com.ioj.wax.ioj;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.InterpolatorRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView TextView__username;
     private TextView TextView_maxin;
     private Bitmap pic_bitmap;
+    public Toolbar mToolbar;
+    public ActionBarDrawerToggle mDrawerToggle;
     public UserInfo mUserInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +46,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mUserInfo = new UserInfo();
         dl=(DrawerLayout)findViewById(R.id.id_drawer_layout);
-        ImageView iv_menu = (ImageView) findViewById(R.id.Image_menu);
-        iv_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dl.openDrawer(Gravity.LEFT,true);
-            }
-        });
+        mToolbar = (Toolbar)findViewById(R.id.main_toolbar);
+        mToolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+        mToolbar.setTitle("Home");
+        setSupportActionBar(mToolbar);
+        mDrawerToggle = new ActionBarDrawerToggle(this,dl,mToolbar,R.string.open,R.string.close);
+        mDrawerToggle.syncState();
+        dl.setDrawerListener(mDrawerToggle);
         //设置点击事件
 
         setDefaultFragment();
         setshadow();
-        //设置默认homeFragment
+        //设置默认homeFragment 
 
         mNavigationView = (NavigationView)findViewById(R.id.id_nv_menu);
         mNavigationView.setNavigationItemSelectedListener(mNavigationItemSelectedListener);
@@ -83,12 +76,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //从文件读取UserInfo信息
+        mUserInfo.setLogin(false);
+        mUserInfo = (UserInfo)ObjectSaveUtils.getObject(MainActivity.this,"UserInfo");
+        if(mUserInfo.isLogin()){
+            TextView__username.setText(mUserInfo.getUsername());
+            TextView_maxin.setText(mUserInfo.getMaxin());
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    pic_bitmap = initRankData.getHttpBitmap(mUserInfo.getPicurl());
+                    mHandler.obtainMessage(85).sendToTarget();
+                }
+            }).start();
+        }
     }
     //负责更新UI
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if(msg.what==85)
+                if(mUserInfo.isLogin()){
+                    Snackbar sBar = Snackbar.make(dl,"欢迎回来，"+mUserInfo.getUsername()+"！",Snackbar.LENGTH_SHORT);
+                    View sv = sBar.getView();
+                    ((TextView)sv.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#ffffffff"));
+                    sv.setBackgroundColor(Color.parseColor("#00BCD4"));
+                    sBar.show();
+                }
                 btn_login.setImageBitmap(pic_bitmap);
             super.handleMessage(msg);
         }
@@ -122,25 +136,27 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.id_content, mHomeFragment);
         transaction.commit();
     }
+    public void openStatus(){
+        FragmentManager FragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = FragmentManager.beginTransaction();
+        if (mStatusFragment == null) {
+            mStatusFragment = new StatusFragment();
+        }
+        // 使用当前Fragment的布局替代id_content的控件
+        setBarTitle("Status");
+        transaction.replace(R.id.id_content, mStatusFragment);
+        transaction.commit();
+        mNavigationView.setCheckedItem(R.id.nav_status);
+    }
     private void setBarTitle(String title){
-        TextView Ttextview = (TextView)findViewById(R.id.TextView_title);
-        Ttextview.setText(title);
+        mToolbar.setTitle(title);
     }
     private void unshadow()
     {
-        ImageView image=(ImageView) findViewById(R.id.shadow_view);
-        ViewGroup.LayoutParams para;
-        para = image.getLayoutParams();
-        para.height=0;
-        image.setLayoutParams(para);
     }
     private void setshadow()
     {
-        ImageView image=(ImageView) findViewById(R.id.shadow_view);
-        ViewGroup.LayoutParams para;
-        para = image.getLayoutParams();
-        para.height=12;
-        image.setLayoutParams(para);
+        //
     }
     private NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener =new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -214,10 +230,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-            if((System.currentTimeMillis()-exitTime) > 2000){
-                //Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            if((System.currentTimeMillis()-exitTime) > 1500){
                 Snackbar sBar = Snackbar.make(dl,"再按一次退出程序",Snackbar.LENGTH_SHORT);
-                View sbView = sBar.getView();
+                View sv = sBar.getView();
+                ((TextView)sv.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#ffffffff"));
+                sv.setBackgroundColor(Color.parseColor("#00BCD4"));
                 sBar.show();
                 exitTime = System.currentTimeMillis();
             } else {
