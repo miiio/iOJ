@@ -51,7 +51,7 @@ public class Ranklist_all extends Fragment {
         public void run() {
             try {
                 isLoadmore=true;
-                initRankData.initData(mRankData,0,mRankData.size()/20+1,false);
+                LoadData.initData(mRankData,0,mRankData.size()/20+1,false);
                 isLoadmore=false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,7 +67,7 @@ public class Ranklist_all extends Fragment {
             try {
                 isRerfer=true;
                 mSwipeRefreshLayout.setRefreshing(true);
-                initRankData.initData(mRankData,0,1,true);
+                LoadData.initData(mRankData,0,1,true);
                 isRerfer=false;
             } catch (Exception e) {
                 e.printStackTrace();

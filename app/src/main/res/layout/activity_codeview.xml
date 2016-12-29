@@ -1,0 +1,41 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/CodeView_appbar"
+        app:elevation="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:theme="@style/toolbar_theme"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            android:id="@+id/CodeView_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:navigationContentDescription="返回"
+            android:background="@color/primary"
+            app:layout_scrollFlags="scroll|enterAlways">
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/CodeView_nestscrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+        <thereisnospon.codeview.CodeView
+            android:id="@+id/CodeView_mainview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </thereisnospon.codeview.CodeView>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

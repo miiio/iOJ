@@ -36,10 +36,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import me.drakeet.materialdialog.MaterialDialog;
 
 
 public class ProblemsView extends Activity{

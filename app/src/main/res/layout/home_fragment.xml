@@ -1,15 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <com.youth.banner.Banner
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/main_banner"
+            android:layout_width="match_parent"
+            android:layout_height="180dp" />
+        <android.support.v7.widget.CardView
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:text="Home"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+                <com.ioj.wax.ioj.MarqueeTextView
+                    android:paddingTop="3dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:background="#d9edf7"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:text="LOCO团队招新了！！！！！！！！！！！！！！！！！！！！！！！！" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:background="#d9edf7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:gravity="left"
+                        android:text="在线人数：20"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:gravity="center"
+                        android:text="日提交量：8"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
 
-</LinearLayout>
+                    <TextView
+                        android:gravity="right"
+                        android:text="今日AC数：5"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:padding="8dp"
+                android:background="#E3E3E3"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/home_newstitle1"
+                    android:text="LOCO团队招新了!!"
+                    android:background="@drawable/tv_touchbg"
+                    android:clickable="true"
+                    android:textSize="16sp"
+                    android:textColor="#08C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/home_news1"
+                    android:text="LOCO团队招新了！！！ 又是一年芳草绿，依然十里杏花红。天下没有不散的宴席，4年前，我们仰望星空，心怀梦想，如今我们实现了4年前的理想，同时也将离开学校开始新的征程。师兄师姐离开了..."
+                    android:textSize="12sp"
+                    android:textColor="#333"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/home_newstitle2"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/tv_touchbg"
+                    android:clickable="true"
+                    android:text="计算机学院12月程序设计竞赛比赛开始注册!!"
+                    android:textSize="16sp"
+                    android:textColor="#08C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/home_news2"
+                    android:text="报名地址：http://acm.swust.edu.cn/register/   我院将举办计算机学院12月程序设计竞赛比赛。本次..."
+                    android:textSize="12sp"
+                    android:textColor="#333"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/home_newstitle3"
+                    android:clickable="true"
+                    android:background="@drawable/tv_touchbg"
+                    android:layout_marginTop="10dp"
+                    android:text="校赛获奖证书领取通知!!"
+                    android:textSize="16sp"
+                    android:textColor="#08C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/home_news3"
+                    android:text="西南科技大学第十二届ACM/ICPC程序设计大赛暨绵阳地区高校邀请赛奖状已经下发到科技部，请每个队的队长到指定负责人处领取，以下为具体领取信息，请大家尽快领取。 1、黄乙轩、黄思寒到..."
+                    android:textSize="12sp"
+                    android:textColor="#333"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="right"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/home_more"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/round_corner_bg"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffffff"
+                        android:text="Learn more>>"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>

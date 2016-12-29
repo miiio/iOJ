@@ -2,6 +2,7 @@ package com.ioj.wax.ioj;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,7 +84,7 @@ public class ContestListAdapt extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public interface RecyItemOnclick {
         //item点击
-        public void onItemOnclick(View view, int index,String id,String title,int status);
+        public void onItemOnclick(View view, int index,String id,String title,int status,String starttime,String endtime);
     }
 
     public class NormalItemHolder extends RecyclerView.ViewHolder{
@@ -100,6 +101,11 @@ public class ContestListAdapt extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv_title = (TextView)itemView.findViewById(R.id.contestlist_title);
             tv_starttime = (TextView)itemView.findViewById(R.id.contestlist_starttime);
             tv_endtime = (TextView)itemView.findViewById(R.id.contestlist_endtime);
+            if(statusid == RUNNING_ITEM){
+                tv_endtime.setTextColor(Color.parseColor("#008000"));
+            }else{
+                tv_endtime.setTextColor(Color.parseColor("#b94a48"));
+            }
             tv_purview = (TextView)itemView.findViewById(R.id.contestlist_purview);
             tv_holder = (TextView)itemView.findViewById(R.id.contestlist_holder);
             itemView.findViewById(R.id.contestlist_itemlayout).setOnClickListener(new View.OnClickListener() {
@@ -109,7 +115,8 @@ public class ContestListAdapt extends RecyclerView.Adapter<RecyclerView.ViewHold
                     if(recyitemonclick != null){
                         int position = getPosition();
                         int status = Integer.parseInt(mDataList.get(position).getStatus());
-                        mRecyItemOnclick.onItemOnclick(v, position,cp.getContestId(),cp.getTitle(),status);
+                        mRecyItemOnclick.onItemOnclick(v, position,cp.getContestId(),cp.getTitle(),status
+                        ,cp.getStartTime(),cp.getEndTime());
                     }
                 }
             });

@@ -17,9 +17,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.geqian.progressbar.FloatTextProgressBar;
+
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ContestView extends AppCompatActivity {
@@ -29,8 +34,11 @@ public class ContestView extends AppCompatActivity {
     private static final int NORMAL_ITEM = 3;
     private String mTitle;
     private String mId;
+    private String startTime;
+    private String endTime;
     private int mStatus;
     private Count mCount;
+    private String servertime;
     private List<Problems_p> mProblemsData = new ArrayList<Problems_p>();
     //private UserInfo mUserInfo;
     private String cookies;
@@ -41,12 +49,17 @@ public class ContestView extends AppCompatActivity {
     private boolean isLoadmore = false;
     private static final int MSG_SUCCESS = 0;
     private static final int MSG_FAILURE = 1;
+    private static final int MSG_INITPROGRESS = 2;
+    private int progress = 100;
+    public FloatTextProgressBar progressbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contestview);
         //获取传入信息
         Intent intent = getIntent();
+        startTime = intent.getStringExtra("starttime");
+        endTime = intent.getStringExtra("endtime");
         cookies = intent.getStringExtra("cookies");
         mTitle = intent.getStringExtra("title");
         TextView contestTitle_tv = (TextView)findViewById(R.id.contestview_title);
@@ -57,7 +70,6 @@ public class ContestView extends AppCompatActivity {
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.contestview_toolbar);
         //设置返回icon
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +93,13 @@ public class ContestView extends AppCompatActivity {
                 sBar.show();
             }
         });
+        //设置时间进度条
+        progressbar = (FloatTextProgressBar)findViewById(R.id.contestview_timeprogress);
+        if(mStatus==ENDED_ITEM){
+            progressbar.setProgress(100);
+        }else if(mStatus == PENDING_ITEM){
+            progressbar.setProgress(0);
+        }
         //mUserInfo = ((MainActivity)getActivity()).mUserInfo;
         //mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.contestview_swip);
         RecyclerView mRecyclerView = (RecyclerView)findViewById(R.id.contestview_recyclerview);
@@ -126,7 +145,10 @@ public class ContestView extends AppCompatActivity {
                 isRerfer=true;
                 //mSwipeRefreshLayout.setRefreshing(true);
                 mCount = new Count(0,0,0,0);
-                LoadData.LoadContestProblems(mCount,mProblemsData,mId,cookies);
+                servertime = LoadData.LoadContestProblems(mCount,mProblemsData,mId,cookies);
+                if(mStatus==RUNNING_ITEM){
+                    serTimeProgress();
+                }
                 isRerfer=false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -134,21 +156,30 @@ public class ContestView extends AppCompatActivity {
             mHandler.obtainMessage(MSG_SUCCESS).sendToTarget();
         }
     }
-    public int getImageResourceId(String name) {
-        R.drawable drawables=new R.drawable();
-        //默认的id
-        int resId=R.drawable.isac;
-        try {
-            //根据字符串字段名，取字段//根据资源的ID的变量名获得Field的对象,使用反射机制来实现的
-            java.lang.reflect.Field field=R.drawable.class.getField(name);
-            //取值
-            resId=(Integer)field.get(drawables);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    private void serTimeProgress(){
+        if(servertime==null){
+            progress=100;
+        }else{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date Date_server = null,Date_start=null,Date_end;//2016-12-25 19:03:01
+            try {
+                Date_server = sdf.parse(servertime);
+                Date_start = sdf.parse(startTime);
+                Date_end = sdf.parse(endTime);
+                if(Date_server==null || Date_start ==null || Date_end==null){
+                    progress=100;
+                    return;
+                }
+                long totaltime = Date_end.getTime() - (Date_start != null ? Date_start.getTime() : 0);
+                long diff = (Date_server != null ? Date_server.getTime() : 0) - (Date_start != null ? Date_start.getTime() : 0);
+                progress = (int)(diff / totaltime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
-        return resId;
     }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -162,15 +193,15 @@ public class ContestView extends AppCompatActivity {
                     tv1.setText("/  score: "+mCount.TotalScore);
                     tv1 = (TextView)findViewById(R.id.contestview_problemsNum);
                     tv1.setText("problems: "+mCount.ProblemsNum);
-                    FloatingActionButton fb=(FloatingActionButton)findViewById(R.id.floatbtn_score);
-                    fb.setBackgroundResource(R.drawable.n2);
-                    //fb.setBackgroundResource(getImageResourceId("n"+mCount.Score));
                     isLoadmore=false;
                     isRerfer=false;
+                    progressbar.setProgress(progress);
                     break;
                 case MSG_FAILURE:
                     mContestViewAdapt.notifyDataSetChanged();
                     break;
+                case MSG_INITPROGRESS:
+                    progressbar.setProgress(progress);
             }
             super.handleMessage(msg);
         }

@@ -22,6 +22,7 @@ public class ContestFragment extends Fragment {
     UserInfo mUserInfo;
     ContestListAdapt mContestListAdapt;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    private String ServerTime;
     private LinearLayoutManager layoutManager;
     private boolean isRerfer=false;
     private boolean isLoadmore = false;
@@ -33,6 +34,9 @@ public class ContestFragment extends Fragment {
     {
         view =  inflater.inflate(R.layout.contest_fragment, container, false);
         mUserInfo = ((MainActivity)getActivity()).mUserInfo;
+        if(mUserInfo==null){
+            mUserInfo=new UserInfo();
+        }
         mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.contest_swipeRefresh);
         RecyclerView mRecyclerView = (RecyclerView)view.findViewById(R.id.contest_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -84,12 +88,14 @@ public class ContestFragment extends Fragment {
         //设置点击事件
         mContestListAdapt.setRecyitemonclick(new ContestListAdapt.RecyItemOnclick() {
             @Override
-            public void onItemOnclick(View view, int index, String id, String title, int status) {
+            public void onItemOnclick(View view, int index, String id, String title, int status,String starttime,String endtime) {
                 Intent intent = new Intent(getActivity(),ContestView.class);
                 intent.putExtra("title",title);
                 intent.putExtra("id",id);
                 intent.putExtra("status",status);
                 intent.putExtra("cookies",mUserInfo.getCookie());
+                intent.putExtra("starttime",starttime);
+                intent.putExtra("endtime",endtime);
                 startActivityForResult(intent,2);
             }
         });

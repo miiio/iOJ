@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="15dp"
-        android:text="talk is cheap, show me the code."/>
+        android:text="."/>
 
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_above="@id/id_mix"
         android:layout_alignLeft="@id/id_mix"
         android:layout_marginBottom="5dp"
-        android:text="5120160446"/>
+        android:text="未登录"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/id_usericon"
@@ -35,9 +35,9 @@
         android:layout_above="@id/id_username"
         android:layout_alignLeft="@id/id_mix"
         android:layout_marginBottom="15dp"
-        android:src="@drawable/t"
         app:civ_border_color="@color/icons"
-        app:civ_border_width="1dp" />
+        app:civ_border_width="1dp"
+        android:src="@drawable/t"/>
 
 
 

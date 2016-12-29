@@ -38,14 +38,15 @@
                     android:orientation="horizontal">
                     <LinearLayout
                         android:orientation="vertical"
-                        android:layout_width="115dp"
+                        android:layout_width="135dp"
                         android:layout_height="100dp"
                         android:background="@drawable/yjjz">
                         <TextView
+                            android:layout_gravity="center"
                             android:id="@+id/contestview_acNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="38dp"
+                            android:paddingLeft="10dp"
                             android:layout_marginTop="32dp"
                             android:textSize="25sp"
                             android:textColor="@color/primary_text"
@@ -109,7 +110,7 @@
                     android:layout_marginRight="70dp"
                     android:layout_height="30dp"
                     android:layout_width="match_parent"
-                    app:progress="80"
+                    app:progress="20"
                     app:backgroundColor="#d8d8d8"
                     app:fillColor="#ff4081"
                     app:triangleColor="#008000"
@@ -119,6 +120,8 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/contestview_toolbar"
                 app:theme="@style/toolbar_theme"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                app:navigationContentDescription="返回"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />

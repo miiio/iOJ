@@ -36,6 +36,9 @@ public class StatusFragment extends Fragment {
         view = inflater.inflate(R.layout.status_fragment, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh_status);
         mUserInfo = ((MainActivity)getActivity()).mUserInfo;
+        if(mUserInfo==null){
+            mUserInfo=new UserInfo();
+         }
         RecyclerView mRecyclerView = (RecyclerView)view.findViewById(R.id.Stuats_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // 设置ItemAnimator
@@ -99,7 +102,8 @@ public class StatusFragment extends Fragment {
             try {
                 isRerfer=true;
                 mSwipeRefreshLayout.setRefreshing(true);
-                LoadStatusInfoData.LoadStatusInfoData(mStatusData,1,true);
+                LoadData.LoadStatusInfoData(mStatusData,1,true);
+                //LoadStatusInfoData.LoadStatusInfoData(mStatusData,1,true);
                 isRerfer=false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -115,7 +119,7 @@ public class StatusFragment extends Fragment {
             try {
                 isLoadmore=true;
                 //LoadProblemsData.LoadProblems(mProblemsData,mProblemsData.size()/20+1,mUserInfo,false);
-                LoadStatusInfoData.LoadStatusInfoData(mStatusData,mStatusData.size()/20+1,false);
+                LoadData.LoadStatusInfoData(mStatusData,mStatusData.size()/20+1,false);
                 isLoadmore=false;
             } catch (Exception e) {
                 e.printStackTrace();

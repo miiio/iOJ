@@ -8,6 +8,16 @@ public class StatusInfo {
     private String time;
     private String compiler;
     private String submittime;
+
+    public String getAcid() {
+        return acid;
+    }
+
+    public void setAcid(String acid) {
+        this.acid = acid;
+    }
+
+    private String acid;
     public void setCompiler(String compiler) {
         this.compiler = compiler;
     }
@@ -25,7 +35,7 @@ public class StatusInfo {
 
     }
 
-    public StatusInfo(String username, String problemid, String result, String memory, String time, String lenght,String compiler,String submittime) {
+    public StatusInfo(String username, String problemid, String result, String memory, String time, String lenght,String compiler,String submittime,String acid) {
         this.username = username;
         this.problemid = problemid;
         this.result = result;
@@ -34,6 +44,7 @@ public class StatusInfo {
         this.lenght = lenght;
         this.compiler = compiler;
         this.submittime = submittime;
+        this.acid = acid;
     }
 
     public String getProblemid() {

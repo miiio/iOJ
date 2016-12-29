@@ -23,4 +23,11 @@ public class Problems_p{
         this.diffcult = diffcult;
         this.contestId = contestId;
     }
+    public Problems_p(){
+        this.id = "";
+        this.title = "";
+        this.isAc = "";
+        this.contestId = "";
+        this.score = "";
+    }
 }

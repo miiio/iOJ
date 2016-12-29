@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.geqian.progressbar.FloatTextProgressBar;
+
 import java.util.List;
 
 public class ContestViewAdapt extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -17,6 +19,7 @@ public class ContestViewAdapt extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static final int ENDED_ITEM = 2;
     private static final int NORMAL_ITEM = 3;
 
+    private String ServerTime;
     private Context mContext;
     private List<Problems_p> mProblems;
     private LayoutInflater mLayoutInflater;

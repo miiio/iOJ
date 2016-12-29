@@ -44,6 +44,9 @@ public class ProblemsFragment extends Fragment {
         final View view = inflater.inflate(R.layout.problems_fragment, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.all_layout_swipe_refresh_pb);
         mUserInfo = ((MainActivity)getActivity()).mUserInfo;
+        if(mUserInfo==null){
+            mUserInfo=new UserInfo();
+        }
         RecyclerView mRecyclerView = (RecyclerView)view.findViewById(R.id.Pb_recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // 设置ItemAnimator
@@ -161,7 +164,7 @@ public class ProblemsFragment extends Fragment {
             try {
                 isRerfer=true;
                 mSwipeRefreshLayout.setRefreshing(true);
-                LoadProblemsData.LoadProblems(mProblemsData,1,mUserInfo,true);
+                LoadData.LoadProblems(mProblemsData,1,mUserInfo,true);
                 isRerfer=false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -176,7 +179,7 @@ public class ProblemsFragment extends Fragment {
             try {
                 isRerfer=true;
                 //mSwipeRefreshLayout.setRefreshing(true);
-                LoadProblemsData.SearchProblems(search_title,mProblemsData,1,mUserInfo);
+                LoadData.SearchProblems(search_title,mProblemsData,1,mUserInfo);
                 isRerfer=false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -191,7 +194,7 @@ public class ProblemsFragment extends Fragment {
         public void run() {
             try {
                 isLoadmore=true;
-                LoadProblemsData.LoadProblems(mProblemsData,mProblemsData.size()/20+1,mUserInfo,false);
+                LoadData.LoadProblems(mProblemsData,mProblemsData.size()/20+1,mUserInfo,false);
                 isLoadmore=false;
             } catch (Exception e) {
                 e.printStackTrace();

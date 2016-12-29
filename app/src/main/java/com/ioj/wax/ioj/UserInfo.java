@@ -9,6 +9,16 @@ public class UserInfo implements Serializable{
     private String picurl;
     private String maxin;
     private boolean isLogin;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getCookie() {
         if(cookie==null)return "";
         return cookie;
@@ -38,13 +48,16 @@ public class UserInfo implements Serializable{
         return maxin;
     }
     public boolean isLogin() {
+        if(this.cookie==null)return false;
         return isLogin;
     }
     public UserInfo()
     {
-        this.username=null;
-        this.picurl=null;
-        this.maxin=null;
+        this.password="";
+        this.cookie="";
+        this.username="null";
+        this.picurl="";
+        this.maxin="null";
         this.isLogin=false;
     }
 
