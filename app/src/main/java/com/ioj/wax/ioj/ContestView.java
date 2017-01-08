@@ -16,11 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
-
-import com.geqian.progressbar.FloatTextProgressBar;
-
-import org.w3c.dom.Text;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +46,7 @@ public class ContestView extends AppCompatActivity {
     private static final int MSG_FAILURE = 1;
     private static final int MSG_INITPROGRESS = 2;
     private int progress = 100;
-    public FloatTextProgressBar progressbar;
+    //public FloatTextProgressBar progressbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +61,6 @@ public class ContestView extends AppCompatActivity {
         contestTitle_tv.setText(mTitle);
         mId = intent.getStringExtra("id");
         mStatus = intent.getIntExtra("status",ENDED_ITEM);
-        setTheme(R.style.Pbv_Theme);
         final Toolbar mToolbar = (Toolbar) findViewById(R.id.contestview_toolbar);
         //设置返回icon
         setSupportActionBar(mToolbar);
@@ -94,12 +88,12 @@ public class ContestView extends AppCompatActivity {
             }
         });
         //设置时间进度条
-        progressbar = (FloatTextProgressBar)findViewById(R.id.contestview_timeprogress);
-        if(mStatus==ENDED_ITEM){
-            progressbar.setProgress(100);
-        }else if(mStatus == PENDING_ITEM){
-            progressbar.setProgress(0);
-        }
+//        progressbar = (FloatTextProgressBar)findViewById(R.id.contestview_timeprogress);
+//        if(mStatus==ENDED_ITEM){
+//            progressbar.setProgress(100);
+//        }else if(mStatus == PENDING_ITEM){
+//            progressbar.setProgress(0);
+//        }
         //mUserInfo = ((MainActivity)getActivity()).mUserInfo;
         //mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.contestview_swip);
         RecyclerView mRecyclerView = (RecyclerView)findViewById(R.id.contestview_recyclerview);
@@ -195,13 +189,13 @@ public class ContestView extends AppCompatActivity {
                     tv1.setText("problems: "+mCount.ProblemsNum);
                     isLoadmore=false;
                     isRerfer=false;
-                    progressbar.setProgress(progress);
+                    //progressbar.setProgress(progress);
                     break;
                 case MSG_FAILURE:
                     mContestViewAdapt.notifyDataSetChanged();
                     break;
                 case MSG_INITPROGRESS:
-                    progressbar.setProgress(progress);
+                    //progressbar.setProgress(progress);
             }
             super.handleMessage(msg);
         }

@@ -11,8 +11,9 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
+            android:theme="@style/toolbar_theme"
+            app:navigationIcon="?attr/homeAsUpIndicator"
             android:id="@+id/login_toolbar"
-            android:title="登陆"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"/>

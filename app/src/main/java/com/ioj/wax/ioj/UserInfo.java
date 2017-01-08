@@ -1,6 +1,8 @@
 package com.ioj.wax.ioj;
 
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class UserInfo implements Serializable{
@@ -10,7 +12,6 @@ public class UserInfo implements Serializable{
     private String maxin;
     private boolean isLogin;
     private String password;
-
     public String getPassword() {
         return password;
     }

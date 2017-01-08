@@ -9,7 +9,7 @@
         android:elevation="2dp"
         android:id="@+id/contestview_appbar"
         android:layout_width="match_parent"
-        android:layout_height="170dp">
+        android:layout_height="140dp">
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/contestview_collapsing_toolbar_layout"
             android:layout_width="match_parent"
@@ -103,19 +103,6 @@
 
                     </LinearLayout>
                 </LinearLayout>
-                <com.geqian.progressbar.FloatTextProgressBar
-                    android:id="@+id/contestview_timeprogress"
-                    android:layout_marginTop="-10dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="70dp"
-                    android:layout_height="30dp"
-                    android:layout_width="match_parent"
-                    app:progress="20"
-                    app:backgroundColor="#d8d8d8"
-                    app:fillColor="#ff4081"
-                    app:triangleColor="#008000"
-                    app:rectColor="#008000"
-                    app:textColor="#fff"/>
             </LinearLayout>
             <android.support.v7.widget.Toolbar
                 android:id="@+id/contestview_toolbar"

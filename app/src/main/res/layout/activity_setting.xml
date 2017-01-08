@@ -1,0 +1,150 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/setting_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:theme="@style/toolbar_theme"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            android:id="@+id/setting_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:navigationContentDescription="返回"
+            android:background="@color/primary"
+            app:layout_scrollFlags="enterAlways">
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/icons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+            android:paddingLeft="20dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="8dp"
+            android:background="#e2e2e2"
+            android:textSize="16sp"
+            android:textColor="#949494"
+            android:text="数据"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/setting_clear"
+                android:layout_marginTop="1dp"
+                android:clickable="true"
+                android:background="@drawable/touch_setting"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="15dp"
+                    android:textSize="16sp"
+                    android:text="清除图片缓存"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="#e2e2e2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </LinearLayout>
+            <TextView
+                android:paddingLeft="20dp"
+                android:paddingBottom="2dp"
+                android:paddingTop="8dp"
+                android:background="#e2e2e2"
+                android:textSize="16sp"
+                android:textColor="#949494"
+                android:text="关于"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="1dp"
+                android:clickable="true"
+                android:background="@drawable/touch_setting"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:paddingTop="15dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="15dp"
+                    android:textSize="16sp"
+                    android:text="版本"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:textSize="14sp"
+                    android:textColor="#747474"
+                    android:text="1.0.0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="#e2e2e2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/setting_mail"
+                android:clickable="true"
+                android:background="@drawable/touch_setting"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:paddingTop="15dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="15dp"
+                    android:textSize="16sp"
+                    android:text="Bug反馈"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:textSize="14sp"
+                    android:textColor="#747474"
+                    android:text="0446(laobo3515@gmail.com)"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="#e2e2e2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/setting_sourcecode"
+                android:clickable="true"
+                android:background="@drawable/touch_setting"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="15dp"
+                    android:textSize="16sp"
+                    android:text="开源库"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

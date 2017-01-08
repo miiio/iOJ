@@ -1,5 +1,6 @@
 package com.ioj.wax.ioj;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -8,6 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -114,7 +117,6 @@ public class LoadData {
             baos.close();
             // 返回字符串
             String html = new String(baos.toByteArray());
-            //获取头像url
             JSONObject jsonobj  = new JSONObject(html); // 返回的数据形式是一个Object类型，所以可以直接转换成一个Object
             JSONArray jsonArr = new JSONArray(jsonobj.getString("problems"));
             for(int i = 0;i<jsonArr.length();i++)
@@ -282,7 +284,7 @@ public class LoadData {
         inputStream.close();
         return bout.toByteArray();
     }
-    public static void initData(List<Ranklist_p> RankData,int type,int page,boolean clear) throws Exception {
+    public static void initData(Context context,List<Ranklist_p> RankData,int type,int page,boolean clear) throws Exception {
         //RankData=new ArrayList<Ranklist_p>();
         String path = "http://acm.swust.edu.cn/user/jranklist/?page="+page+"&operation=ALL&range=0";
         URL url = new URL(path.trim());
@@ -301,38 +303,12 @@ public class LoadData {
                 JSONObject jsonobj2 = jsonArr.getJSONObject(i);
                 //if(maxim.isEmpty()) {this.maxim="我不想说话.";}
                 String picUrl = "http://acm.swust.edu.cn" + jsonobj2.getString("avatar");
-                RankData.add(new Ranklist_p(jsonobj2.getString("username"),getHttpBitmap(picUrl),
+                RankData.add(new Ranklist_p(jsonobj2.getString("username"),getHttpBitmap(context,picUrl),
                         jsonobj2.getString("maxim").isEmpty()?"我不想说话.":jsonobj2.getString("maxim"),
-                        jsonobj2.getString("solved"),jsonobj2.getString("submit"),jsonobj2.getString("rank_num")));
+                        jsonobj2.getString("solved"),jsonobj2.getString("submit"),jsonobj2.getString("rank_num"),picUrl));
             }
             //map=(LinkedHashMap<String,String>)jsonObject.get("ranks");
         }
-    }
-    public static Bitmap getHttpBitmap(String url){
-        URL myFileURL;
-        Bitmap bitmap=null;
-        try{
-            myFileURL = new URL(url);
-            //获得连接
-            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
-            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
-            conn.setConnectTimeout(6000);
-            //连接设置获得数据流
-            conn.setDoInput(true);
-            //不使用缓存
-            conn.setUseCaches(true);
-            //这句可有可无，没有影响
-            //conn.connect();
-            //得到数据流
-            InputStream is = conn.getInputStream();
-            //解析得到图片
-            bitmap = BitmapFactory.decodeStream(is);
-            //关闭数据流
-            is.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return bitmap;
     }
     public static void LoadContestData(List<ContestInfo> ContestData, int page, UserInfo user, boolean clear) throws IOException, JSONException {
         if(clear)ContestData.clear();
@@ -730,17 +706,238 @@ public class LoadData {
             baos.close();
             // 返回字符串
             html = new String(baos.toByteArray());
-//            int pid = Integer.parseInt(prbid);
-//            tit.setTitle(getStrMid(html, "</a></td>\n" +
-//                    "      <td><a href=\"/problem/" + pid + "\">", "</a></td>\n" +
-//                    "      \n" +
-//                    "      <td>"));
+            int pid = Integer.parseInt(prbid);
+            tit.setTitle(getStrMid(html, "</a></td>\n" +
+                    "      <td><a href=\"/problem/" + pid + "\">", "</a></td>\n" +
+                    "      \n" +
+                    "      <td>"));
             ret = getStrMid(html, "<textarea id=\"code_source\" class=\"hide\">",
                     "</textarea>\n" +
                             "\n" +
                             "<div id=\"result_div\"></div>");
             System.out.println(ret);
         }
+//        ret = ret.replace("\\","\\\\");
+//        ret = ret.replace("'","\\'");
+        ret = ret.replace("&lt;", "<");
+        ret = ret.replace("&gt;", ">");
+        ret = ret.replace("&nbsp;", " ");
+        ret = ret.replace("&amp;", "&");
         return ret;
+    }
+
+    public static String getResult(String ResultId){
+        String str_result = "null";
+        switch (ResultId){
+            case "-1":
+                str_result="Waiting";
+                break;
+            case "0":
+                str_result="Accept";
+                break;
+            case "1":
+                str_result="PE";
+                break;
+            case "2":
+                str_result="TLE";
+                break;
+            case "3":
+                str_result="MLE";
+                break;
+            case "4":
+                str_result="WA";
+                break;
+            case "5":
+                str_result="RE";
+                break;
+            case "6":
+                str_result="OLE";
+                break;
+            case "7":
+                str_result="CE";
+                break;
+            case "8":
+            case "9":
+                str_result="SE";
+                break;
+        }
+        return str_result;
+    }
+    public static void getMyAc(List<String> acData,List<String> chData,String username) throws IOException, JSONException {
+        acData.clear();
+        chData.clear();
+        //http://acm.swust.edu.cn/user/sproblem/20131295/
+        URL picurl = new URL("http://acm.swust.edu.cn/user/sproblem/"+username+"/");
+        HttpURLConnection conn = (HttpURLConnection)picurl.openConnection();
+        conn.setRequestProperty("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+        conn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36");
+        conn.setRequestProperty("Cookie","yunsuo_session_verify=d63358bc4c466b16467deff7f066a890; " +
+                "csrftoken=Beg45JXf9ZxOM5VaTvECAfmPdbKRZIVH; " +
+                "Hm_lvt_f5127c6793d40d199f68042b8a63e725=1478845119; " +
+                "Hm_lpvt_f5127c6793d40d199f68042b8a63e725=1478846104; " +
+                "");
+        conn.setRequestMethod("GET");
+        String html=null;
+        int id = conn.getResponseCode();
+        if (id == 200) {
+            // 获取响应的输入流对象
+            InputStream is = conn.getInputStream();
+            // 创建字节输出流对象
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            // 定义读取的长度
+            int len = 0;
+            // 定义缓冲区
+            byte buffer[] = new byte[1024];
+            // 按照缓冲区的大小，循环读取
+            while ((len = is.read(buffer)) != -1) {
+                // 根据读取的长度写入到os对象中
+                baos.write(buffer, 0, len);
+            }
+            // 释放资源
+            is.close();
+            baos.close();
+            // 返回字符串
+            html = new String(baos.toByteArray());
+            JSONObject jsonobj  = new JSONObject(html); // 返回的数据形式是一个String类型，所以可以直接转换成一个Object
+            JSONArray jsonArr = new JSONArray(jsonobj.getString("ac_pros"));
+            for(int i = 0;i<jsonArr.length();i++)
+            {
+                acData.add(jsonArr.getString(i));
+            }
+            JSONArray ChjsonArr = new JSONArray(jsonobj.getString("ch_pros"));
+            for(int i = 0;i<ChjsonArr.length();i++)
+            {
+                chData.add(ChjsonArr.getString(i));
+            }
+        }
+    }
+    public static Bitmap getHttpBitmap(Context context,String url){
+        return getImage(context,url);
+//        URL myFileURL;
+//        Bitmap bitmap=null;
+//        try{
+//            myFileURL = new URL(url);
+//            //获得连接
+//            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
+//            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+//            conn.setConnectTimeout(6000);
+//            //连接设置获得数据流
+//            conn.setDoInput(true);
+//            //不使用缓存
+//            conn.setUseCaches(true);
+//            //这句可有可无，没有影响
+//            //conn.connect();
+//            //得到数据流
+//            InputStream is = conn.getInputStream();
+//            //解析得到图片
+//            bitmap = BitmapFactory.decodeStream(is);
+//            //关闭数据流
+//            is.close();
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        return bitmap;
+    }
+    public static void clearImageCache(Context context){
+        try {
+            delAllFile(context.getCacheDir() + "/"); //删除完里面所有内容
+            String filePath = context.getCacheDir() + "/";
+            filePath = filePath.toString();
+            java.io.File myFilePath = new java.io.File(filePath);
+            myFilePath.delete(); //删除空文件夹
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private static boolean delAllFile(String path) {
+        boolean flag = false;
+        File file = new File(path);
+        if (!file.exists()) {
+            return flag;
+        }
+        if (!file.isDirectory()) {
+            return flag;
+        }
+        String[] tempList = file.list();
+        File temp = null;
+        for (int i = 0; i < tempList.length; i++) {
+            if (path.endsWith(File.separator)) {
+                temp = new File(path + tempList[i]);
+            } else {
+                temp = new File(path + File.separator + tempList[i]);
+            }
+            if (temp.isFile()) {
+                temp.delete();
+            }
+            if (temp.isDirectory()) {
+                delAllFile(path + "/" + tempList[i]);//先删除文件夹里面的文件
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
+    public static  Bitmap getImage(Context context, String url) {
+        if(url == null )
+            return null;
+        String imagePath="";
+        String   fileName   = "";
+        Bitmap mBitmap=null;
+
+        // 获取url中图片的文件名与后缀
+        if(url!=null&&url.length()!=0){
+            fileName  = url.substring(url.lastIndexOf("/")+1);
+        }else{
+            return null;
+        }
+
+        // 图片在手机本地的存放路径,注意：fileName为空的情况
+        imagePath = context.getCacheDir() + "/" + fileName;
+        //Log.i(TAG,"imagePath = " + imagePath);
+        File file = new File(context.getCacheDir(),fileName);// 保存文件,
+        if(!file.exists())
+        {
+            //Log.i(TAG, "file 不存在 ");
+            try {
+                byte[] data =  readInputStream(getRequest(url));
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0,
+                        data.length);
+                bitmap.compress(Bitmap.CompressFormat.WEBP, 100, new FileOutputStream(
+                        file));
+
+                imagePath = file.getAbsolutePath();
+                mBitmap = bitmap;
+                //Log.i(TAG,"imagePath : file.getAbsolutePath() = " +  imagePath);
+
+            } catch (Exception e) {
+                //Log.e(TAG, e.toString());
+            }
+        }else{
+            mBitmap = BitmapFactory.decodeFile(imagePath);
+        }
+        //return imagePath;
+        return mBitmap;
+    } // getImagePath( )结束。
+    public static InputStream getRequest(String path) throws Exception{
+        URL url = new URL(path);
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setConnectTimeout(5000); // 5秒
+        if(conn.getResponseCode() == 200){
+            return conn.getInputStream();
+        }
+        return null;
+
+    }
+    public static byte[] readInputStream(InputStream inStream) throws Exception{
+        ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int len = 0;
+        while( (len = inStream.read(buffer)) != -1 ){
+            outSteam.write(buffer, 0, len);
+        }
+        outSteam.close();
+        inStream.close();
+        return outSteam.toByteArray();
     }
 }

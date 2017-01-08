@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/highLightText/highLightText.iml" filepath="$PROJECT_DIR$/highLightText/highLightText.iml" />
       <module fileurl="file://$PROJECT_DIR$/iOJ.iml" filepath="$PROJECT_DIR$/iOJ.iml" />
-      <module fileurl="file://$PROJECT_DIR$/progressbar/progressbar.iml" filepath="$PROJECT_DIR$/progressbar/progressbar.iml" />
     </modules>
   </component>
 </project>

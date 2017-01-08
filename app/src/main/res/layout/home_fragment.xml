@@ -20,21 +20,22 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.ioj.wax.ioj.MarqueeTextView
+                    android:id="@+id/home_home"
                     android:paddingTop="3dp"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textSize="15sp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:ellipsize="marquee"
                     android:background="#d9edf7"
                     android:marqueeRepeatLimit="marquee_forever"
-                    android:text="LOCO团队招新了！！！！！！！！！！！！！！！！！！！！！！！！" />
+                    android:text="" />
                 <LinearLayout
                     android:orientation="horizontal"
                     android:padding="5dp"
@@ -42,21 +43,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/home_online"
                         android:gravity="left"
-                        android:text="在线人数：20"
+                        android:text="在线人数：..."
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:id="@+id/home_submitnum"
                         android:gravity="center"
-                        android:text="日提交量：8"
+                        android:text="日提交量：..."
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content" />
 
                     <TextView
+                        android:id="@+id/home_acnum"
                         android:gravity="right"
-                        android:text="今日AC数：5"
+                        android:text="今日AC数：..."
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content" />

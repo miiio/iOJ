@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +28,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
     private final static int Login_REQUEST_CODE=1;
     private AppBarLayout appbar;
     private EditText input_user;
@@ -36,6 +38,17 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Toolbar mToolbar = (Toolbar)findViewById(R.id.login_toolbar);
+        mToolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+        mToolbar.setTitle("登陆");
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         appbar = (AppBarLayout)findViewById(R.id.login_appbar);
         Button btnlogin=(Button)findViewById(R.id.buttonLogin);
         input_user = (EditText) findViewById(R.id.editTextName);

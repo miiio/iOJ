@@ -1,5 +1,6 @@
 package com.ioj.wax.ioj;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -30,7 +32,7 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newslist);
         //设置标题
-        mToolbar = (Toolbar)findViewById(R.id.CodeView_toolbar);
+        mToolbar = (Toolbar)findViewById(R.id.News_toolbar);
         mToolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         mToolbar.setTitle("ALL OF THE OJ NEWS");
         setSupportActionBar(mToolbar);
@@ -44,10 +46,19 @@ public class NewsActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView)findViewById(R.id.news_recyclerview);
         adapter = new CommonAdapter<NewsInfo>(this,R.layout.newsshow,mData ){
             @Override
-            protected void convert(ViewHolder holder, NewsInfo newsInfo, int position) {
+            protected void convert(final ViewHolder holder, final NewsInfo newsInfo, int position) {
                 holder.setText(R.id.newslist_title,newsInfo.getNewstitle());
                 holder.setText(R.id.newslist_date,newsInfo.getDate());
                 holder.setText(R.id.newslist_name,newsInfo.getName());
+                holder.setOnClickListener(R.id.newsshow, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(NewsActivity.this,NewsViewActivity.class);
+                        //((TextView)v).getText().toString()
+                        intent.putExtra("title",newsInfo.getNewstitle()).putExtra("id",newsInfo.getNewsid());
+                        startActivity(intent);
+                    }
+                });
             }
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

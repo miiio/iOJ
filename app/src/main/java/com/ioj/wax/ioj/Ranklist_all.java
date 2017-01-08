@@ -1,5 +1,6 @@
 package com.ioj.wax.ioj;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,6 +27,7 @@ public class Ranklist_all extends Fragment {
     private List<Ranklist_p> mRankData = new ArrayList<Ranklist_p>();
     SwipeRefreshLayout mSwipeRefreshLayout;
     View view;
+    UserInfo mUserInfo;
     private static final int MSG_SUCCESS = 0;
     private static final int MSG_FAILURE = 1;
 
@@ -51,7 +53,7 @@ public class Ranklist_all extends Fragment {
         public void run() {
             try {
                 isLoadmore=true;
-                LoadData.initData(mRankData,0,mRankData.size()/20+1,false);
+                LoadData.initData(getContext(),mRankData,0,mRankData.size()/20+1,false);
                 isLoadmore=false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -67,7 +69,7 @@ public class Ranklist_all extends Fragment {
             try {
                 isRerfer=true;
                 mSwipeRefreshLayout.setRefreshing(true);
-                LoadData.initData(mRankData,0,1,true);
+                LoadData.initData(getContext(),mRankData,0,1,true);
                 isRerfer=false;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -100,7 +102,10 @@ public class Ranklist_all extends Fragment {
     }
 
     @Nullable
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {mUserInfo = ((MainActivity)getActivity()).mUserInfo;
+        if(mUserInfo==null){
+            mUserInfo=new UserInfo();
+        }
         isLoadmore=false;
         isRerfer=false;
         view = inflater.inflate(R.layout.ranklist_all,container,false);
@@ -126,6 +131,20 @@ public class Ranklist_all extends Fragment {
         // 初始化自定义的适配器
         myRLAdapter = new RanklistAdapter(getActivity(), mRankData);
         // 为mRecyclerView设置适配器
+        myRLAdapter.setRecyitemonclick(new RanklistAdapter.RecyItemOnclick() {
+            @Override
+            public void onItemOnclick(View view, int index, UserInfo userInfo, String rk) {
+                Intent intent = new Intent(getActivity(), UserViewActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("userinfo",userInfo);
+                intent.putExtras(bundle);
+                intent.putExtra("cookies",mUserInfo.getCookie());
+                intent.putExtra("username",mUserInfo.getUsername());
+                intent.putExtra("rank",rk);
+                startActivityForResult(intent,2);
+                //startActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(myRLAdapter);
         initload();
         mRecyclerView.setOnTouchListener(
@@ -143,4 +162,11 @@ public class Ranklist_all extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==2){
+            ((MainActivity)getActivity()).openStatus();
+        }
+    }
 }

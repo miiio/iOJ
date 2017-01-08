@@ -155,7 +155,7 @@ public class StatusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public interface RecyItemOnclick {
         //item点击
-        public void onItemOnclick(View view, int index,String id,String title);
+        public void onItemOnclick(View view, int index,String id);
     }
 
     public class itemViewHolder
@@ -193,7 +193,7 @@ public class StatusAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (recyitemonclick != null) {
                 // 重点 这里ViewHolder 中提供了 getPosition（）；
                 int position = getPosition();
-                //recyitemonclick.onItemOnclick(v, position,pp.id,pp.title);
+                recyitemonclick.onItemOnclick(v, position,pp.getProblemid());
             }
         }
     }

@@ -52,8 +52,14 @@ public class StatusFragment extends Fragment {
         //为mRecyclerView设置点击事件
         mStatusAdapter.setRecyitemonclick(new StatusAdapter.RecyItemOnclick() {
             @Override
-            public void onItemOnclick(View view, int index, String id, String title) {
-
+            public void onItemOnclick(View view, int index, String id) {
+                Intent intent = new Intent(getActivity(),ProblemsView.class);
+                intent.putExtra("title","");
+                intent.putExtra("id",id);
+                intent.putExtra("cookies",mUserInfo.getCookie());
+                intent.putExtra("contestid","0");
+                intent.putExtra("username",mUserInfo.getUsername());
+                startActivityForResult(intent,2);
             }
         });
         mSwipeRefreshLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -95,6 +101,19 @@ public class StatusFragment extends Fragment {
         new RefreshThread().start();
         return view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==2){
+//            ((MainActivity)getActivity()).openStatus();
+            if(isRerfer==false && isLoadmore==false){
+                new RefreshThread().start();
+            }
+        }
+    }
+
     class RefreshThread extends Thread
     {
         @Override

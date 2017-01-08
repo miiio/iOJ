@@ -3,12 +3,14 @@
     <color name="primary">#00BCD4</color>
     <color name="primary_dark2">#00BCD4</color>
     <color name="primary_dark">#0097A7</color>
-    <color name="primary_light">#B2EBF2</color>
     <color name="accent">#00BCD4</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
-    <color name="h_text">#B0C4DE</color>
     <color name="hometv">#E3E3E3</color>
+    <color name="gree">#008000</color>
+    <color name="backg">#e8e8e8</color>
+    <color name="white">#fafafa</color>
+    <color name="half_black">#808080</color>
 </resources>

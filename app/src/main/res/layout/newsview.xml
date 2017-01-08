@@ -1,0 +1,78 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:theme="@style/toolbar_theme"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                android:id="@+id/NewsView_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/primary">
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="22sp"
+                    android:textColor="#08C"
+                    android:text="计算机学院12月程序设计竞赛比赛开始注册"
+                    android:id="@+id/newsview_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Publisher : ACM团队"
+                    android:textColor="@color/secondary_text"
+                    android:layout_marginLeft="12dp"
+                    android:id="@+id/newsview_publisher"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="1dp"
+                    android:text="Time : 2016-12-30 00:00:36"
+                    android:textColor="@color/secondary_text"
+                    android:layout_marginLeft="12dp"
+                    android:id="@+id/newsview_publishdate"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="1dp"
+                    android:text="PV : 1239"
+                    android:textColor="@color/secondary_text"
+                    android:layout_marginLeft="12dp"
+                    android:id="@+id/newsview_publishpv"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/newsview_c"
+                    android:text="奖（队员全为大一新生），热爱编程的同学们赶紧报名吧！"
+                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

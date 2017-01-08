@@ -22,5 +22,9 @@
         <activity android:name=".ContestView"></activity>
         <activity android:name=".CodeViewActivity"></activity>
         <activity android:name=".NewsActivity"></activity>
+        <activity android:name=".NewsViewActivity"></activity>
+        <activity android:name="UserViewActivity"></activity>
+        <activity android:name=".SCodeViewActivity"></activity>
+        <activity android:name=".SettingActivity"></activity>
     </application>
 </manifest>

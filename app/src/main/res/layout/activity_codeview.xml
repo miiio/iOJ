@@ -7,7 +7,6 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/CodeView_appbar"
-        app:elevation="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <android.support.v7.widget.Toolbar
@@ -21,21 +20,31 @@
             app:layout_scrollFlags="scroll|enterAlways">
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-
     <android.support.v4.widget.NestedScrollView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/CodeView_nestscrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
-
         <thereisnospon.codeview.CodeView
+            android:nestedScrollingEnabled="false"
             android:id="@+id/CodeView_mainview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         </thereisnospon.codeview.CodeView>
-
     </android.support.v4.widget.NestedScrollView>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatbtn_sharemycode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:layout_anchor="@id/CodeView_nestscrollview"
+        app:layout_anchorGravity="bottom|right|end"
+        app:layout_behavior="com.ioj.wax.ioj.ScrollAwareFABBehaviorDefault"
+        android:layout_margin="35dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        android:src="@drawable/shar_fbtn" />
 </android.support.design.widget.CoordinatorLayout>

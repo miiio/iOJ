@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/header_rl"
     android:layout_height="215dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/primary_dark"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@color/primary_dark"
     android:fitsSystemWindows="true"
     android:theme="@style/AppTheme">
-
     <TextView
         android:id="@+id/id_mix"
         android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="15dp"
-        android:text="."/>
+        android:text="点击头像登陆"/>
 
 
     <TextView
@@ -36,9 +36,16 @@
         android:layout_alignLeft="@id/id_mix"
         android:layout_marginBottom="15dp"
         app:civ_border_color="@color/icons"
-        app:civ_border_width="1dp"
-        android:src="@drawable/t"/>
+        android:src="@drawable/coder"
+        app:civ_border_width="1dp"/>
 
-
+    <ImageView
+        android:id="@+id/switch_user"
+        android:layout_alignTop="@+id/id_usericon"
+        android:layout_toRightOf="@id/id_usericon"
+        android:layout_marginLeft="140dp"
+        android:src="@drawable/sswitch"
+        android:layout_width="22dp"
+        android:layout_height="22dp" />
 
 </RelativeLayout>

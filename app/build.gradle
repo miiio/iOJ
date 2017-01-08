@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "com.ioj.wax.ioj"
@@ -18,7 +18,11 @@ android {
         }
     }
 }
-
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'thereisnospon.codeview:codeview:0.3.1'
@@ -33,7 +37,9 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.zhy:okhttputils:2.6.2'
     compile 'com.zhy:base-rvadapter:3.0.3'
-    compile project(':progressbar')
+    compile 'com.github.ForgetAll:LoadingDialog:v1.0.4'
+    compile 'com.github.kingideayou:tagcloudview:1.0.2'
+    compile 'com.getbase:floatingactionbutton:1.10.1'
+    compile 'com.wx.goodview:goodview:1.0.0'
     compile project(':highLightText')
-    compile files('libs/mysql-connector-java-5.0.8-bin.jar')
 }

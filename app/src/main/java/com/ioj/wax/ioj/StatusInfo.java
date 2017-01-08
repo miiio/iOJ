@@ -1,6 +1,8 @@
 package com.ioj.wax.ioj;
 
-public class StatusInfo {
+import java.io.Serializable;
+
+public class StatusInfo implements Serializable {
     private String username;
     private String problemid;
     private String result;
